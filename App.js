@@ -1,21 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Row from './Components/Row';
+import Banner from './Components/Banner';
+import requests from './API/requests'
+import { View, FlatList } from 'react-native';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ backgroundColor:"black" }}>
+      <Banner/>
+      <Row
+        title="Netflix originals"
+        fetchUrl={requests.fetchNetflixOriginals}
+        isLargeRow />
+
+      <Row title="Nouveautés" fetchUrl={requests.fetchTrending} />
+      <Row title="Top 20" fetchUrl={requests.fetchTopRated} />
+      <Row title="Films d'Action" fetchUrl={requests.fetchTrending} />
+      <Row title="Comédie" fetchUrl={requests.fetchComedyMovies} />
+      <Row title="Films d'Horreur" fetchUrl={requests.fetchHorrorMovies} />
+      <Row title="Comedie Romatiques" fetchUrl={requests.fetchRomanceMovies} />
+      <Row title="Documentaires" fetchUrl={requests.fetchDocumentaries} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
