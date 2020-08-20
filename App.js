@@ -2,12 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import Row from './Components/Row';
 import Banner from './Components/Banner';
+import Nav from './Components/Nav';
 import requests from './API/requests'
 import { View, FlatList } from 'react-native';
 
 export default function App() {
   return (
     <View style={{ backgroundColor:"black" }}>
+      <Nav/>
       <Banner/>
       <Row
         title="Netflix originals"

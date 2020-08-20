@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from '../API/axios';
 import requests from '../API/requests';
-import { StyleSheet, Text, View, ImageBackground, Button, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native'
 
 const Banner = () => {
 
     const [movie, setMovie] = useState([])
+    const [buttonColor, setButtonColor] = useState("rgba(51,51,51,0.5)")
 
     useEffect(() => {
         async function fetchData() {
@@ -24,11 +25,18 @@ const Banner = () => {
                 style={styles.image}
                 source={{ uri: (`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`) }}>
                 <Text style={styles.title}>{movie?.title || movie?.name || movie?.original_name}</Text>
-                <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <Text style={styles.buttonText}>Lire</Text>
+                <View
+                    style={styles.buttonsContainer}
+                >
+                    <TouchableOpacity
+                        style={styles.button}
+
+                    >
+                        <Text style={[styles.buttonText, { backgroundColor: buttonColor }]}>Lire</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity
+                        style={styles.button}
+                    >
                         <Text style={styles.buttonText}>Détails</Text>
                     </TouchableOpacity>
                 </View>
@@ -56,7 +64,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         color: "white",
         fontSize: 30,
-        backgroundColor: "rgba(51,51,51,0.5)",
         textTransform: "uppercase"
 
     },
@@ -69,19 +76,16 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        borderBottomColor: '#737373',
+
         borderRadius: 0.2,
         paddingVertical: 0.5,
-        marginHorizontal: 5
+        marginHorizontal: 5,
     },
     buttonText: {
         color: 'white',
-        fontSize: 20,
-        paddingVertical: 0.5,
-        paddingHorizontal: 0.5,
-        paddingTop: 5,
-        paddingBottom: 5,
-        color: '#fff',
+        fontSize: 15,
+        paddingVertical: 3,
+        paddingHorizontal: 7,
         textAlign: 'center',
         backgroundColor: 'rgba(51,51,51,0.7)',
         borderRadius: 10,
