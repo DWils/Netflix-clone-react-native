@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import axios from '../API/axios';
 import requests from '../API/requests';
-import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity, Button } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
 
-const Banner = () => {
+
+
+const Banner = props => {
 
     const [movie, setMovie] = useState([])
     const [buttonColor, setButtonColor] = useState("rgba(51,51,51,0.5)")
+    const navigation = useNavigation();
 
     useEffect(() => {
         async function fetchData() {
-            const request = await axios.get(requests.fetchNetflixOriginals)
+            const request = await axios.get(requests.fetchTrending)
             setMovie(request.data.results[
                 Math.floor(Math.random() * request.data.results.length - 1)
             ])
@@ -22,24 +27,41 @@ const Banner = () => {
     return (
         <View style={styles.banner}>
             <ImageBackground
-                style={styles.image}
+                style={styles.poster}
                 source={{ uri: (`https://image.tmdb.org/t/p/original/${movie?.backdrop_path}`) }}>
-                <Text style={styles.title}>{movie?.title || movie?.name || movie?.original_name}</Text>
-                <View
-                    style={styles.buttonsContainer}
-                >
-                    <TouchableOpacity
-                        style={styles.button}
 
+                <Text style={styles.title}>{movie?.title || movie?.name || movie?.original_name}</Text>
+                <LinearGradient
+                    colors={['transparent', 'rgba(0,0,0,0.5)', 'black']}
+                    style={{
+                        position: 'absolute',
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        height: 200,
+                    }}
+                />
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity
+                        onPress={()=> navigation.navigate("FilmDetail", {movie} )}
+                        style={styles.button}
                     >
-                        <Text style={[styles.buttonText, { backgroundColor: buttonColor }]}>Lire</Text>
+                        <Text style={styles.buttonText}>Info</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
+                        onPress={()=> navigation.navigate("Lecture", {movie} )}
                         style={styles.button}
                     >
-                        <Text style={styles.buttonText}>Détails</Text>
+                        <Text style={styles.buttonText}>Lecture</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Ajouter à ma liste</Text>
                     </TouchableOpacity>
                 </View>
+
 
             </ImageBackground>
 
@@ -53,22 +75,24 @@ const Banner = () => {
 export default Banner
 
 const styles = StyleSheet.create({
-    image: {
-        width: 400,
-        height: 300,
-        margin: 5
+    poster: {
+        width: '100%',
+        height: 600,
+        zIndex: 1,
+        resizeMode: "cover"
     },
     title: {
-        alignSelf: 'flex-start',
-        marginTop: 130,
+        alignSelf: 'center',
+        marginTop: 400,
         marginLeft: 10,
         color: "white",
         fontSize: 30,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
+        fontWeight: "bold",
 
     },
     buttonsContainer: {
-        alignSelf: 'flex-start',
+        alignSelf: 'center',
         marginTop: 20,
         marginLeft: 10,
         flexDirection: "row",
@@ -83,7 +107,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 15,
+        fontSize: 20,
         paddingVertical: 3,
         paddingHorizontal: 7,
         textAlign: 'center',

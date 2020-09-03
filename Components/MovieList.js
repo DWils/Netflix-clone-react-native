@@ -19,7 +19,3 @@ const MovieList = ({ movies }) => {
 }
 
 export default MovieList
-
-const styles = StyleSheet.create({
-
-})
