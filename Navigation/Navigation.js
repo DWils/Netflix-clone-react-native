@@ -35,8 +35,8 @@ const Navigation = () => {
                     name="Lecture"
                     component={Lecture}
                     options={{
-                        title: "",
-                        headerShown: false
+                        title: "Lecture du film",
+                        headerShown: true
                     }}
                 />
             </Stack.Navigator>

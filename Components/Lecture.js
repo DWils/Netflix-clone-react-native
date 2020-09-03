@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { Video } from 'expo-av';
-import YouTube from 'react-native-youtube';
 
 
 const Lecture = props => {
@@ -16,18 +15,18 @@ const Lecture = props => {
     }, []);
 
     return (
-        <View>
-            <YouTube
-                videoId="KVZ-P-ZI6W4" // The YouTube video ID
-                play // control playback of video with true/false
-                fullscreen // control whether the video should play in fullscreen or inline
-                loop // control whether the video should loop when ended
-                onReady={e => this.setState({ isReady: true })}
-                onChangeState={e => this.setState({ status: e.state })}
-                onChangeQuality={e => this.setState({ quality: e.quality })}
-                onError={e => this.setState({ error: e.error })}
-                style={{ alignSelf: 'stretch', height: 300 }}
+        <View style={{marginTop: 200}}>
+            <Video
+                source={{ uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4' }}
+                rate={1.0}
+                volume={1.0}
+                isMuted={false}
+                resizeMode="cover"
+                shouldPlay
+                isLooping
+                style={{ width: "100%", height: 250 }}
             />
+
 
         </View>
     )

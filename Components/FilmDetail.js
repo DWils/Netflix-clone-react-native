@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { StyleSheet, View, Text, ActivityIndicator, ScrollView, Image, TouchableOpacity, Platform } from 'react-native'
-import { getFilmDetailFromApi, getImageFromApi } from '../API/TMDBApi'
-import axios from '../API/axios'
-import { fetchDetails } from '../API/requests'
+import { getImageFromApi } from '../API/TMDBApi'
 import moment from 'moment'
 import numeral from 'numeral'
+import { useNavigation } from '@react-navigation/native';
 
 const FilmDetail = props => {
 
     const [film, setFilm] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const navigation = useNavigation();
 
     useEffect(() => {
 
@@ -36,6 +36,12 @@ const FilmDetail = props => {
                         style={styles.image}
                         source={{ uri: getImageFromApi(film.backdrop_path) }}
                     />
+                    <TouchableOpacity
+                        onPress={()=> navigation.navigate("Lecture", {film} )}
+                        style={styles.button}
+                    >
+                        <Text style={styles.buttonText}>Lecture</Text>
+                    </TouchableOpacity>
                     <Text style={styles.title_text}>{film.title || film.name || film.original_name}</Text>
                     <Text style={styles.default_text}>Sorti le {moment(new Date(film.release_date || film.first_air_date)).format('DD/MM/YYYY')}</Text>
                     <Text style={styles.default_text}>Note : {film.vote_average} / 10</Text>
@@ -131,7 +137,24 @@ const styles = StyleSheet.create({
     share_image: {
         width: 30,
         height: 30
-    }
+    },
+    button: {
+
+        borderRadius: 0.2,
+        paddingVertical: 0.5,
+        marginHorizontal: 5,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 20,
+        paddingVertical: 3,
+        paddingHorizontal: 7,
+        textAlign: 'center',
+        backgroundColor: 'rgba(51,51,51,0.7)',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'black'
+    },
 
 
 })
